@@ -4,7 +4,7 @@ type: runtime
   
 # use external databases (default: false)
 use_mongodb: false
-use_mariadb: true
+use_mariadb: false
 
 
 # relative path to document root (default: .)
