@@ -13,7 +13,7 @@ work_dir: "."
 # <<< runtime only setting >>>
 
 # docker entrypoint command (default: "cat")
-entrypoint: "./app"
+entrypoint: "main"
 
 # which port to proxy via http(80) (default: null)
 http_proxy: 8080
@@ -31,3 +31,4 @@ internal: "off"
 # use secure access <"off", "soft", "hard"> (default: "off")
 https: "on"
 
+__image: ghcr.io/mojashi/twetter:refs-heads-master-latest
