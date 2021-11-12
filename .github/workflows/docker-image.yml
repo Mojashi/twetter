@@ -11,17 +11,17 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/yumetter-api
+      IMAGE_ID: ghcr.io/${{ github.repository_owner }}/twetter
 
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag yumetter-api
+      run: docker build . --file Dockerfile --tag twetter
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
-        username: a-omori-yumemi
+        username: Mojashi
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Push image
       if: startsWith(github.ref, 'refs/heads/')
