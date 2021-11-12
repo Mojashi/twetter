@@ -1,0 +1,33 @@
+
+# deploy mode <"static", "runtime", "fcgi-*"> (required)
+type: runtime
+  
+# use external databases (default: false)
+use_mongodb: false
+use_mariadb: true
+
+
+# relative path to document root (default: .)
+work_dir: "."
+
+# <<< runtime only setting >>>
+
+# docker entrypoint command (default: "cat")
+entrypoint: "./app"
+
+# which port to proxy via http(80) (default: null)
+http_proxy: 8080
+
+# which port to expose <array or int> (default: [])
+expose: []
+
+# enviromnent variables passed to docker container (default: {})
+envs: {}
+# <<< static or http-proxied-runtime only setting >>>
+
+# parse user token, restrict access from non-traP user <"off", "soft", "hard"> (default: "off")
+internal: "off"
+
+# use secure access <"off", "soft", "hard"> (default: "off")
+https: "on"
+
