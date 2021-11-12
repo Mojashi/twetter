@@ -1,6 +1,7 @@
 package util
 
 import (
+	"crypto/rand"
 	"fmt"
 	"os"
 	"time"
@@ -9,7 +10,18 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-var secret = os.Getenv("SECRET")
+var secret string
+
+func init() {
+	secret = os.Getenv("SECRET")
+	if secret == "" {
+		var err error
+		secret, err = MakeRandomStr(20)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
 
 type Claim struct {
 	jwt.StandardClaims
@@ -42,4 +54,19 @@ func UseSession(tokenString string) (user.UserID, error) {
 	} else {
 		return 0, fmt.Errorf("invalid session")
 	}
+}
+
+func MakeRandomStr(digit uint32) (string, error) {
+	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	b := make([]byte, digit)
+	if _, err := rand.Read(b); err != nil {
+		return "", fmt.Errorf("unexpected error")
+	}
+
+	var result string
+	for _, v := range b {
+		result += string(letters[int(v)%len(letters)])
+	}
+	return result, nil
 }

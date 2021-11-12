@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/rand"
 	"fmt"
 	"html/template"
 	"io"
@@ -37,21 +36,6 @@ func authMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
 		return next(c)
 	}
-}
-
-func MakeRandomStr(digit uint32) (string, error) {
-	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-	b := make([]byte, digit)
-	if _, err := rand.Read(b); err != nil {
-		return "", fmt.Errorf("unexpected error...")
-	}
-
-	var result string
-	for _, v := range b {
-		result += string(letters[int(v)%len(letters)])
-	}
-	return result, nil
 }
 
 func getIndex(c echo.Context) error {
@@ -154,7 +138,7 @@ func postRegister(c echo.Context) error {
 type Template struct{}
 
 func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	nonce, err := MakeRandomStr(10)
+	nonce, err := util.MakeRandomStr(10)
 	if err != nil {
 		return err
 	}
